@@ -1994,6 +1994,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Main",
   data: function data() {
@@ -2028,6 +2034,21 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return text;
+    },
+    formatData: function formatData(data) {
+      var postData = new Date(data);
+      var day = postData.getDate();
+      var month = parseInt(postData.getMonth() + 1);
+
+      if (day < 10) {
+        day = '0' + day;
+      }
+
+      if (month < 10) {
+        month = '0' + month;
+      }
+
+      return day + '/' + month + '/' + postData.getFullYear();
     }
   }
 });
@@ -37828,9 +37849,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "container" }, [
-    _c("p", [_vm._v("Sei nella pagina numero " + _vm._s(_vm.currentPage))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("In totale ci sono " + _vm._s(_vm.lastPage))]),
+    _c("div", { staticClass: "container" }, [
+      _c("p", [_vm._v("Sei nella pagina numero " + _vm._s(_vm.currentPage))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("In totale ci sono " + _vm._s(_vm.lastPage))])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -37842,6 +37865,8 @@ var render = function() {
               _c("h5", { staticClass: "card-title" }, [
                 _vm._v(_vm._s(post.title))
               ]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(_vm.formatData(post.created_at)))]),
               _vm._v(" "),
               _c("p", { staticClass: "card-text" }, [
                 _vm._v(_vm._s(_vm.truncate(post.content, 100)))
@@ -37859,80 +37884,82 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-      _c(
-        "ul",
-        { staticClass: "pagination" },
-        [
-          _c(
-            "li",
-            {
-              staticClass: "page-item",
-              class: { disabled: _vm.currentPage === 1 }
-            },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "page-link",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.getPosts(_vm.currentPage - 1)
-                    }
-                  }
-                },
-                [_vm._v("Previous")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm._l(_vm.lastPage, function(i) {
-            return _c(
+    _c("div", { staticClass: "container" }, [
+      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+        _c(
+          "ul",
+          { staticClass: "pagination" },
+          [
+            _c(
               "li",
               {
-                key: i,
                 staticClass: "page-item",
-                class: { active: _vm.currentPage == i },
-                on: {
-                  click: function($event) {
-                    return _vm.getPost(1)
-                  }
-                }
+                class: { disabled: _vm.currentPage === 1 }
               },
               [
-                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                  _vm._v(_vm._s(i))
-                ])
+                _c(
+                  "button",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.currentPage - 1)
+                      }
+                    }
+                  },
+                  [_vm._v("Previous")]
+                )
               ]
-            )
-          }),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              staticClass: "page-item",
-              class: { disabled: _vm.currentPage === _vm.lastPage }
-            },
-            [
-              _c(
-                "button",
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.lastPage, function(i) {
+              return _c(
+                "li",
                 {
-                  staticClass: "page-link",
-                  attrs: { href: "#" },
+                  key: i,
+                  staticClass: "page-item",
+                  class: { active: _vm.currentPage == i },
                   on: {
                     click: function($event) {
-                      return _vm.getPosts(_vm.currentPage + 1)
+                      return _vm.getPosts(i)
                     }
                   }
                 },
-                [_vm._v("Next")]
+                [
+                  _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+                    _vm._v(_vm._s(i))
+                  ])
+                ]
               )
-            ]
-          )
-        ],
-        2
-      )
+            }),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: { disabled: _vm.currentPage === _vm.lastPage }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.currentPage + 1)
+                      }
+                    }
+                  },
+                  [_vm._v("Next")]
+                )
+              ]
+            )
+          ],
+          2
+        )
+      ])
     ])
   ])
 }
