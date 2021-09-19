@@ -16,12 +16,16 @@
 
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item"><button class="page-link" href="#" 
+            <li class="page-item" :class="{'disabled' : currentPage === 1}" ><button class="page-link" href="#" 
             @click="getPosts(currentPage - 1)">Previous</button></li>
+
             <li class="page-item"><a class="page-link" href="#">1</a></li>
+
             <li class="page-item"><a class="page-link" href="#">2</a></li>
+
             <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><button class="page-link" href="#" 
+
+            <li class="page-item" :class="{'disabled' : currentPage === lastPage}"><button class="page-link" href="#" 
             @click="getPosts(currentPage + 1)">Next</button></li>
         </ul>
     </nav>
@@ -42,11 +46,15 @@ export default {
       }
   },
   created(){
-      this.getPosts();
+      this.getPosts(1);
   },
   methods: {
-      getPosts(){
-           axios.get(this.chiamataApi)
+     getPosts(pagePost){
+        axios.get(this.chiamataApi, {
+                params: {
+                page: pagePost
+                }
+                })
                 .then(response => {
                     this.posts = response.data.results.data;
                     // console.log(response.data.results);

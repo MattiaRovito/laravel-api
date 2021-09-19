@@ -1986,6 +1986,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Main",
   data: function data() {
@@ -1997,13 +2001,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.getPosts();
+    this.getPosts(1);
   },
   methods: {
-    getPosts: function getPosts() {
+    getPosts: function getPosts(pagePost) {
       var _this = this;
 
-      axios.get(this.chiamataApi).then(function (response) {
+      axios.get(this.chiamataApi, {
+        params: {
+          page: pagePost
+        }
+      }).then(function (response) {
         _this.posts = response.data.results.data; // console.log(response.data.results);
 
         _this.currentPage = response.data.results.current_page;
@@ -37842,21 +37850,28 @@ var render = function() {
     _vm._v(" "),
     _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
       _c("ul", { staticClass: "pagination" }, [
-        _c("li", { staticClass: "page-item" }, [
-          _c(
-            "button",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  return _vm.getPosts(_vm.currentPage - 1)
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: { disabled: _vm.currentPage === 1 }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getPosts(_vm.currentPage - 1)
+                  }
                 }
-              }
-            },
-            [_vm._v("Previous")]
-          )
-        ]),
+              },
+              [_vm._v("Previous")]
+            )
+          ]
+        ),
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
@@ -37864,21 +37879,28 @@ var render = function() {
         _vm._v(" "),
         _vm._m(2),
         _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c(
-            "button",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  return _vm.getPosts(_vm.currentPage + 1)
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: { disabled: _vm.currentPage === _vm.lastPage }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getPosts(_vm.currentPage + 1)
+                  }
                 }
-              }
-            },
-            [_vm._v("Next")]
-          )
-        ])
+              },
+              [_vm._v("Next")]
+            )
+          ]
+        )
       ])
     ])
   ])
