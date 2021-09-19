@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}}</h5>
-                    <p class="card-text">{{post.content}}</p>
+                    <p class="card-text">{{ truncate(post.content, 100) }}</p>
                     <a href="#" class="btn btn-primary">Dettagli</a>
                 </div>
             </div>
@@ -53,21 +53,27 @@ export default {
       this.getPosts(1);
   },
   methods: {
-     getPosts(pagePost){
-        axios.get(this.chiamataApi, {
-                params: {
-                page: pagePost,
-                }
-                })
-                .then(response => {
-                    this.posts = response.data.results.data;
-                    // console.log(response.data.results);
-                    this.currentPage = response.data.results.current_page;
-                    this.lastPage = response.data.results.last_page;
+        getPosts(pagePost){
+            axios.get(this.chiamataApi, {
+                    params: {
+                    page: pagePost,
+                    }
+                    })
+                    .then(response => {
+                        this.posts = response.data.results.data;
+                        // console.log(response.data.results);
+                        this.currentPage = response.data.results.current_page;
+                        this.lastPage = response.data.results.last_page;
 
-                })
-                .catch()
-      }
+                    })
+                    .catch()
+        },
+        truncate(text,maxlength){
+            if(text.length > maxlength){
+                return text.substr(0, maxlength) + '...';
+            }
+            return text;
+    },
   }
 }
 </script>
