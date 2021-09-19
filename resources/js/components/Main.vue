@@ -19,11 +19,15 @@
             <li class="page-item" :class="{'disabled' : currentPage === 1}" ><button class="page-link" href="#" 
             @click="getPosts(currentPage - 1)">Previous</button></li>
 
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li 
+            class="page-item"  
+            v-for="i in lastPage" 
+            :key="i" 
+            @click="getPost(1)"
+            :class="{'active': currentPage==i}" 
+            ><a class="page-link" href="#">{{i}}</a></li>
 
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+        
 
             <li class="page-item" :class="{'disabled' : currentPage === lastPage}"><button class="page-link" href="#" 
             @click="getPosts(currentPage + 1)">Next</button></li>
@@ -52,7 +56,7 @@ export default {
      getPosts(pagePost){
         axios.get(this.chiamataApi, {
                 params: {
-                page: pagePost
+                page: pagePost,
                 }
                 })
                 .then(response => {
@@ -62,6 +66,7 @@ export default {
                     this.lastPage = response.data.results.last_page;
 
                 })
+                .catch()
       }
   }
 }
